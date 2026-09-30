@@ -1,0 +1,55 @@
+/* QR */
+.qr-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+#qrCanvas { width: 160px; height: 160px; }
+.qr-label {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Ticket actions */
+.ticket-actions {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+}
+button.secondary {
+  background: #fff;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+button.secondary:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Verification */
+.verify-ok {
+  background: #e8f5e9;
+  border-left: 4px solid var(--success);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.verify-fail {
+  background: #ffebee;
+  border-left: 4px solid #c62828;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 520px) {
+  .ticket-actions { grid-template-columns: 1fr; }
+}

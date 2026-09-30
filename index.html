@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Oaklands MDD & Graduation 2026</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <div class="badge">OAKLANDS NURSERY & PRIMARY SCHOOL</div>
+  <h1>Music, Dance & Drama</h1>
+  <h2>Pre-Primary Graduation 2026</h2>
+  <p class="date">20 November 2026</p>
+  <p>Celebrate our children, their talents and their graduation milestone.</p>
+</header>
+
+<main>
+<section class="card">
+  <h2>Get Your Ticket</h2>
+  <div class="prices">
+    <div><strong>UGX 30,000</strong><span>Parent / Visitor Ticket</span></div>
+    <div><strong>UGX 50,000</strong><span>Child Participation Fee</span></div>
+  </div>
+
+  <form id="ticketForm">
+    <label>Parent / Guardian Name<input required name="parentName"></label>
+    <label>Phone Number<input required name="phone" placeholder="07XXXXXXXX"></label>
+    <label>Email (optional)<input type="email" name="email"></label>
+    <label>Child's Name (if paying child fee)<input name="childName"></label>
+    <label>Ticket Type
+      <select required name="ticketType" id="ticketType">
+        <option value="parent">Parent / Visitor — UGX 30,000</option>
+        <option value="child">Child Participation — UGX 50,000</option>
+      </select>
+    </label>
+    <label>Payment Method
+      <select required name="paymentMethod">
+        <option value="MTN">MTN Mobile Money</option>
+        <option value="AIRTEL">Airtel Money</option>
+      </select>
+    </label>
+    <button type="submit">Continue to Payment</button>
+  </form>
+</section>
+
+<section class="card hidden" id="paymentBox">
+  <h2>Payment Instructions</h2>
+  <p>Your booking reference: <b id="bookingRef">—</b></p>
+  <p>Send the displayed amount to the school's registered mobile-money number.</p>
+  <div class="paybox">
+    <div><b>MTN MoMo:</b> <span id="mtnNumber">0772489399</span></div>
+    <div><b>Airtel Money:</b> <span id="airtelNumber">0743165961</span></div>
+  </div>
+  <p class="small">After sending, enter the transaction ID below. The school will verify against the MoMo merchant API in production.</p>
+  <form id="confirmForm">
+    <label>Mobile-money transaction/reference ID<input required name="reference"></label>
+    <button type="submit">Confirm Payment & Generate Ticket</button>
+  </form>
+</section>
+
+<section class="card hidden" id="ticketBox">
+  <div id="ticket">
+    <div id="ticketContent"></div>
+    <div class="qr-wrap">
+      <canvas id="qrCanvas"></canvas>
+      <div class="qr-label">Scan at the gate</div>
+    </div>
+  </div>
+  <div class="ticket-actions">
+    <button id="downloadPdf">⬇ Download PDF Ticket</button>
+    <button class="secondary" onclick="window.print()">🖨 Print</button>
+  </div>
+</section>
+
+<!-- Gate verification (hidden unless ?verify=REF is in URL) -->
+<section class="card hidden" id="verifyBox">
+  <h2>Ticket Verification</h2>
+  <div id="verifyResult"></div>
+</section>
+</main>
+
+<footer>Oaklands Nursery and Primary School • 20 November 2026</footer>
+
+<!-- Libraries for QR + PDF -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
