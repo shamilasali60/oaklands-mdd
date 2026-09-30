@@ -50,6 +50,7 @@ confirmForm.addEventListener('submit', async (e) => {
     const typeLabel = orderData.ticketType === 'child' ? 'Child Participation' : 'Parent / Visitor';
     const now = new Date().toLocaleString();
 
+    // 1. Build the Ticket HTML
     ticketContent.innerHTML = `
         <h3 style="color:#6a1b9a; margin-bottom:10px; font-size:1.5rem;">Oaklands Nursery & Primary School</h3>
         <p style="color:#666; margin-bottom:20px; font-size:0.9rem;">Music, Dance & Drama — Pre-Primary Graduation 2026</p>
@@ -68,10 +69,23 @@ confirmForm.addEventListener('submit', async (e) => {
         </div>
         
         <div style="margin-top:20px; text-align:center; padding:20px; border:2px dashed #6a1b9a; border-radius:10px; color:#6a1b9a;">
-            <div style="font-size:3rem; margin-bottom:5px;">🎓</div>
-            <div style="font-weight:bold; letter-spacing:1px;">SCAN AT THE GATE</div>
+            <div id="qrcode-container" style="display:flex; justify-content:center; margin-bottom:10px;"></div>
+            <div style="font-weight:bold; letter-spacing:1px; font-size:0.8rem;">SCAN AT THE GATE</div>
         </div>
     `;
+
+    // 2. Generate the Real QR Code
+    const qrContainer = document.getElementById('qrcode-container');
+    if (qrContainer) {
+        new QRCode(qrContainer, {
+            text: "https://oaklands-mdd.onrender.com/verify/" + currentRef,
+            width: 120,
+            height: 120,
+            colorDark : "#4a148c", // Purple color to match your theme
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    }
 
     paymentBox.classList.add('hidden');
     ticketBox.classList.remove('hidden');
