@@ -1,4 +1,167 @@
-/* QR */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary: #6a1b9a;
+  --primary-dark: #4a148c;
+  --accent: #f9a825;
+  --bg: #faf7ff;
+  --card: #ffffff;
+  --text: #2c2c3e;
+  --muted: #6b6b7b;
+  --border: #e5dff2;
+  --success: #2e7d32;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff;
+  text-align: center;
+  padding: 60px 20px 80px;
+  position: relative;
+}
+
+.badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.hero h1 {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.hero h2 {
+  font-size: 1.3rem;
+  font-weight: 400;
+  opacity: 0.95;
+  margin-bottom: 16px;
+}
+
+.hero .date {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--primary-dark);
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+main {
+  max-width: 720px;
+  margin: -40px auto 40px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 10px 40px rgba(106, 27, 154, 0.08);
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+}
+
+.card h2 {
+  color: var(--primary);
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.prices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.prices > div {
+  background: linear-gradient(135deg, #f3e5f5, #fff8e1);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+.prices strong {
+  display: block;
+  font-size: 1.6rem;
+  color: var(--primary-dark);
+  margin-bottom: 4px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+form input, form select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 6px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #fff;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+button:hover {
+  background: var(--primary-dark);
+}
+
+.paybox {
+  background: #fff8e1;
+  border: 2px dashed var(--accent);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 16px 0;
+}
+
+.hidden {
+  display: none;
+}
+
+footer {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+
 .qr-wrap {
   display: flex;
   flex-direction: column;
@@ -9,47 +172,27 @@
   border-radius: 12px;
   border: 1px solid var(--border);
 }
-#qrCanvas { width: 160px; height: 160px; }
-.qr-label {
-  margin-top: 8px;
-  font-size: 0.8rem;
-  color: var(--muted);
-  letter-spacing: 1px;
-  text-transform: uppercase;
+
+#qrCanvas {
+  width: 160px;
+  height: 160px;
 }
 
-/* Ticket actions */
 .ticket-actions {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 12px;
+  margin-top: 20px;
 }
+
 button.secondary {
   background: #fff;
   color: var(--primary);
   border: 2px solid var(--primary);
 }
-button.secondary:hover {
-  background: var(--primary);
-  color: #fff;
-}
-
-/* Verification */
-.verify-ok {
-  background: #e8f5e9;
-  border-left: 4px solid var(--success);
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 12px;
-}
-.verify-fail {
-  background: #ffebee;
-  border-left: 4px solid #c62828;
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 12px;
-}
 
 @media (max-width: 520px) {
+  .hero h1 { font-size: 2rem; }
+  .prices { grid-template-columns: 1fr; }
   .ticket-actions { grid-template-columns: 1fr; }
 }
