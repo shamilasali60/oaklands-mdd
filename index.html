@@ -52,7 +52,7 @@
     <div><b>MTN MoMo:</b> <span id="mtnNumber">0772489399</span></div>
     <div><b>Airtel Money:</b> <span id="airtelNumber">0743165961</span></div>
   </div>
-  <p class="small">After sending, enter the transaction ID below. The school will verify against the MoMo merchant API in production.</p>
+  <p class="small">After sending, enter the transaction ID below.</p>
   <form id="confirmForm">
     <label>Mobile-money transaction/reference ID<input required name="reference"></label>
     <button type="submit">Confirm Payment & Generate Ticket</button>
@@ -62,30 +62,18 @@
 <section class="card hidden" id="ticketBox">
   <div id="ticket">
     <div id="ticketContent"></div>
-    <div class="qr-wrap">
-      <canvas id="qrCanvas"></canvas>
-      <div class="qr-label">Scan at the gate</div>
-    </div>
   </div>
   <div class="ticket-actions">
     <button id="downloadPdf">⬇ Download PDF Ticket</button>
     <button class="secondary" onclick="window.print()">🖨 Print</button>
   </div>
 </section>
-
-<!-- Gate verification (hidden unless ?verify=REF is in URL) -->
-<section class="card hidden" id="verifyBox">
-  <h2>Ticket Verification</h2>
-  <div id="verifyResult"></div>
-</section>
 </main>
 
 <footer>Oaklands Nursery and Primary School • 20 November 2026</footer>
 
-<!-- Libraries for QR + PDF -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- This is the QR Code Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
