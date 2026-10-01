@@ -5,43 +5,28 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Oaklands MDD & Graduation 2026</title>
 <link rel="stylesheet" href="style.css">
-<style>
-  .hero-qr-container { background: white; padding: 15px; border-radius: 12px; display: inline-block; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-  .hero-qr-label { margin-top: 10px; color: #4a148c; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; }
-  .copy-btn { background: #f9a825; color: #4a148c; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
-  
-  .price-btn {
-    background: linear-gradient(135deg, #f3e5f5, #fff8e1);
-    border: 1px solid #e5dff2;
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    width: 100%;
-    font-family: inherit;
-    margin-bottom: 0;
-  }
-  .price-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(106, 27, 154, 0.15); border-color: #6a1b9a; }
-  .price-btn strong { display: block; font-size: 1.6rem; color: #4a148c; margin-bottom: 4px; }
-  .price-btn span { font-size: 0.85rem; color: #6b6b7b; }
-
-  #formSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #e5dff2; animation: fadeIn 0.5s; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  
-  .form-header { background: #f3e5f5; color: #4a148c; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; text-align: center; }
-</style>
+<!-- Import Beautiful Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+
 <header class="hero">
-  <div class="badge">OAKLANDS NURSERY & PRIMARY SCHOOL</div>
-  <h1>Music, Dance & Drama</h1>
-  <h2>Pre-Primary Graduation 2026</h2>
-  <p class="date">20 November 2026</p>
-  <p>Celebrate our children, their talents and their graduation milestone.</p>
-  <div class="hero-qr-container">
-    <div id="main-page-qr"></div>
-    <div class="hero-qr-label">Scan to Buy Tickets</div>
+  <div class="hero-content">
+    <!-- LOGO SECTION -->
+    <img src="logo.png" alt="Oaklands Logo" class="school-logo">
+    
+    <div class="badge">OAKLANDS NURSERY & PRIMARY SCHOOL</div>
+    <h1>Music, Dance & Drama</h1>
+    <h2>Pre-Primary Graduation 2026</h2>
+    <p class="date">20 November 2026</p>
+    <p class="hero-desc">Celebrate our children, their talents and their graduation milestone.</p>
+    
+    <div class="hero-qr-container">
+      <div id="main-page-qr"></div>
+      <div class="hero-qr-label">Scan to Buy Tickets</div>
+    </div>
   </div>
 </header>
 
@@ -51,9 +36,11 @@
   
   <div class="prices">
     <button type="button" class="price-btn" onclick="showForm('parent')">
+      <div class="price-icon">🎟️</div>
       <strong>UGX 30,000</strong><span>Parent / Visitor Ticket</span>
     </button>
     <button type="button" class="price-btn" onclick="showForm('child')">
+      <div class="price-icon">🎓</div>
       <strong>UGX 50,000</strong><span>Child Participation Fee</span>
     </button>
   </div>
@@ -64,14 +51,12 @@
     <form id="ticketForm">
       <input type="hidden" name="ticketType" id="ticketType">
 
-      <!-- 30k Specific Field -->
       <label id="numTicketsLabel" style="display:none;">Number of Tickets
         <input type="number" name="numTickets" min="1" value="1" placeholder="1">
       </label>
 
       <label>Parent / Guardian Name<input required name="parentName" placeholder="Full Name"></label>
       
-      <!-- 50k Specific Fields -->
       <label id="childNameLabel" style="display:none;">Child's Name<input name="childName" placeholder="Student Name"></label>
       <label id="childClassLabel" style="display:none;">Child's Class<input name="childClass" placeholder="e.g. Baby Class"></label>
       
@@ -85,32 +70,32 @@
         </select>
       </label>
       
-      <button type="submit">Continue to Payment</button>
-      <button type="button" class="secondary" onclick="hideForm()" style="margin-top:10px; background:#fff; color:#666; border:1px solid #ccc;">Cancel</button>
+      <button type="submit" class="btn-primary">Continue to Payment</button>
+      <button type="button" class="btn-secondary" onclick="hideForm()">Cancel</button>
     </form>
   </div>
 </section>
 
 <section class="card hidden" id="paymentBox">
   <h2>Payment Instructions</h2>
-  <p>Your booking reference: <b id="bookingRef">—</b></p>
-  <p style="margin-bottom: 15px;">Please send <b id="displayAmount">UGX 0</b> to the number below using your phone:</p>
+  <p>Your booking reference: <b id="bookingRef" class="ref-code">—</b></p>
+  <p class="pay-instruction">Please send <b id="displayAmount">UGX 0</b> to the number below:</p>
   
   <div class="paybox">
-    <div id="mtnRow" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-      <div><b>MTN MoMo:</b> <span style="font-size:1.1rem;">+256 772 489 399</span></div>
+    <div id="mtnRow" class="pay-row">
+      <div class="pay-info"><b>MTN MoMo:</b> <span>+256 772 489 399</span></div>
       <button type="button" class="copy-btn" onclick="copyToClipboard('+256772489399')">Copy</button>
     </div>
-    <div id="airtelRow" style="display:flex; justify-content:space-between; align-items:center;">
-      <div><b>Airtel Money:</b> <span style="font-size:1.1rem;">+256 743 165 961</span></div>
+    <div id="airtelRow" class="pay-row">
+      <div class="pay-info"><b>Airtel Money:</b> <span>+256 743 165 961</span></div>
       <button type="button" class="copy-btn" onclick="copyToClipboard('+256743165961')">Copy</button>
     </div>
   </div>
 
-  <p class="small" style="margin-top:15px;">After sending the money, enter the Transaction ID you received in the SMS below.</p>
+  <p class="small-text">After sending, enter the Transaction ID from your SMS below.</p>
   <form id="confirmForm">
     <label>Mobile-money Transaction ID<input required name="reference" placeholder="e.g. 8H392..."></label>
-    <button type="submit">Confirm Payment & Generate Ticket</button>
+    <button type="submit" class="btn-primary">Confirm Payment & Generate Ticket</button>
   </form>
 </section>
 
@@ -119,13 +104,15 @@
     <div id="ticketContent"></div>
   </div>
   <div class="ticket-actions">
-    <button id="downloadPdf"> Download PDF Ticket</button>
-    <button class="secondary" onclick="window.print()">🖨 Print</button>
+    <button id="downloadPdf" class="btn-primary">⬇ Download PDF Ticket</button>
+    <button class="btn-secondary" onclick="window.print()">🖨 Print</button>
   </div>
 </section>
 </main>
 
-<footer>Oaklands Nursery and Primary School • 20 November 2026</footer>
+<footer>
+  <p>Oaklands Nursery and Primary School • 20 November 2026</p>
+</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="app.js"></script>
