@@ -26,24 +26,10 @@
   .price-btn strong { display: block; font-size: 1.6rem; color: #4a148c; margin-bottom: 4px; }
   .price-btn span { font-size: 0.85rem; color: #6b6b7b; }
 
-  /* Form Section Styles */
-  #formSection {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 2px dashed #e5dff2;
-    animation: fadeIn 0.5s;
-  }
+  #formSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #e5dff2; animation: fadeIn 0.5s; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   
-  .form-header {
-    background: #f3e5f5;
-    color: #4a148c;
-    padding: 10px 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    font-weight: bold;
-    text-align: center;
-  }
+  .form-header { background: #f3e5f5; color: #4a148c; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; text-align: center; }
 </style>
 </head>
 <body>
@@ -63,7 +49,6 @@
 <section class="card">
   <h2>Get Your Ticket</h2>
   
-  <!-- STEP 1: SELECTION BUTTONS -->
   <div class="prices">
     <button type="button" class="price-btn" onclick="showForm('parent')">
       <strong>UGX 30,000</strong><span>Parent / Visitor Ticket</span>
@@ -73,20 +58,25 @@
     </button>
   </div>
 
-  <!-- STEP 2: EMBEDDED FORM (Hidden by default) -->
   <div id="formSection" class="hidden">
     <div class="form-header" id="formHeaderTitle">Complete your booking</div>
     
     <form id="ticketForm">
-      <!-- Hidden field to store selection -->
       <input type="hidden" name="ticketType" id="ticketType">
 
+      <!-- 30k Specific Field -->
+      <label id="numTicketsLabel" style="display:none;">Number of Tickets
+        <input type="number" name="numTickets" min="1" value="1" placeholder="1">
+      </label>
+
       <label>Parent / Guardian Name<input required name="parentName" placeholder="Full Name"></label>
+      
+      <!-- 50k Specific Fields -->
+      <label id="childNameLabel" style="display:none;">Child's Name<input name="childName" placeholder="Student Name"></label>
+      <label id="childClassLabel" style="display:none;">Child's Class<input name="childClass" placeholder="e.g. Baby Class"></label>
+      
       <label>Phone Number<input required name="phone" placeholder="07XXXXXXXX"></label>
       <label>Email (optional)<input type="email" name="email"></label>
-      
-      <!-- Only shows for Child Participation -->
-      <label id="childNameLabel" style="display:none;">Child's Name<input name="childName" placeholder="Student Name"></label>
       
       <label>Payment Method
         <select required name="paymentMethod">
@@ -129,8 +119,8 @@
     <div id="ticketContent"></div>
   </div>
   <div class="ticket-actions">
-    <button id="downloadPdf">⬇ Download PDF Ticket</button>
-    <button class="secondary" onclick="window.print()"> Print</button>
+    <button id="downloadPdf"> Download PDF Ticket</button>
+    <button class="secondary" onclick="window.print()">🖨 Print</button>
   </div>
 </section>
 </main>
