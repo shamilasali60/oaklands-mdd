@@ -70,18 +70,18 @@ confirmForm.addEventListener('submit', async (e) => {
         
         <div style="margin-top:20px; text-align:center; padding:20px; border:2px dashed #6a1b9a; border-radius:10px; color:#6a1b9a;">
             <div id="qrcode-container" style="display:flex; justify-content:center; margin-bottom:10px;"></div>
-            <div style="font-weight:bold; letter-spacing:1px; font-size:0.8rem;">SCAN AT THE GATE</div>
+            <div style="font-weight:bold; letter-spacing:1px; font-size:0.8rem;">SCAN TO BUY TICKET</div>
         </div>
     `;
 
-    // 2. Generate the Real QR Code
+    // 2. Generate the Real QR Code pointing to the main page
     const qrContainer = document.getElementById('qrcode-container');
     if (qrContainer) {
         new QRCode(qrContainer, {
-            text: "https://oaklands-mdd.onrender.com/verify/" + currentRef,
+            text: "https://oaklands-mdd.onrender.com",
             width: 120,
             height: 120,
-            colorDark : "#4a148c", // Purple color to match your theme
+            colorDark : "#4a148c", 
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.H
         });
