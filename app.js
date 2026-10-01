@@ -4,63 +4,79 @@ const ticketBox = document.getElementById('ticketBox');
 const confirmForm = document.getElementById('confirmForm');
 const ticketContent = document.getElementById('ticketContent');
 const bookingRefEl = document.getElementById('bookingRef');
+const displayAmount = document.getElementById('displayAmount');
 
 let orderData = {};
 let currentRef = '';
 
-// --- NEW: Draw QR Code on the Main Page ---
+// --- Draw QR Code on Main Page ---
 window.addEventListener('load', () => {
     const mainQr = document.getElementById('main-page-qr');
     if (mainQr) {
         new QRCode(mainQr, {
-            text: window.location.href, // Links to this website
-            width: 120,
-            height: 120,
-            colorDark : "#4a148c",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
+            text: window.location.href, width: 120, height: 120,
+            colorDark : "#4a148c", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H
         });
     }
 });
 
-// STEP 1: Create Booking
+// --- Helper to copy numbers ---
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert('Number copied: ' + text);
+    });
+}
+
+// --- STEP 1: Show Payment Instructions ---
 ticketForm.addEventListener('submit', async (e) => {
     e.preventDefault(); 
     
     const formData = new FormData(ticketForm);
     orderData = Object.fromEntries(formData);
     orderData.amount = orderData.ticketType === 'child' ? 50000 : 30000;
+    currentRef = 'OAK-' + Math.floor(Math.random() * 1000000);
 
-    try {
-        const res = await fetch('/api/bookings', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(orderData)
-        });
-        const data = await res.json();
-        currentRef = data.ref;
-    } catch (err) {
-        currentRef = 'OAK-LOCAL-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+    // Show the correct amount
+    displayAmount.textContent = 'UGX ' + orderData.amount.toLocaleString();
+
+    // Highlight the correct payment row and hide the other
+    const mtnRow = document.getElementById('mtnRow');
+    const airtelRow = document.getElementById('airtelRow');
+    
+    if (orderData.paymentMethod === 'MTN') {
+        mtnRow.style.display = 'flex';
+        mtnRow.style.background = '#fff8e1';
+        mtnRow.style.padding = '10px';
+        mtnRow.style.borderRadius = '8px';
+        airtelRow.style.display = 'none';
+    } else {
+        airtelRow.style.display = 'flex';
+        airtelRow.style.background = '#fff8e1';
+        airtelRow.style.padding = '10px';
+        airtelRow.style.borderRadius = '8px';
+        mtnRow.style.display = 'none';
     }
 
     bookingRefEl.textContent = currentRef;
     ticketForm.closest('.card').classList.add('hidden');
     paymentBox.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// STEP 2: Confirm Payment & Show Ticket
+// --- STEP 2: Confirm Payment & Show Ticket ---
 confirmForm.addEventListener('submit', async (e) => {
     e.preventDefault(); 
     
     const momoRef = confirmForm.querySelector('[name=reference]').value;
 
+    // Save to database
     try {
-        await fetch(`/api/bookings/${currentRef}/confirm`, {
+        await fetch('/api/bookings', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ momoRef })
+            body: JSON.stringify({ ...orderData, momoRef: momoRef, paid: true })
         });
-    } catch (err) { console.log('Backend offline'); }
+    } catch (err) { console.log('Database save failed'); }
 
     const typeLabel = orderData.ticketType === 'child' ? 'Child Participation' : 'Parent / Visitor';
     const now = new Date().toLocaleString();
@@ -75,7 +91,7 @@ confirmForm.addEventListener('submit', async (e) => {
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Ticket Type:</span> <b>${typeLabel}</b></div>
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Amount Paid:</span> <b>UGX ${Number(orderData.amount).toLocaleString()}</b></div>
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Payment Method:</span> <b>${orderData.paymentMethod} MoMo</b></div>
-        <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>MoMo Ref:</span> <b>${momoRef}</b></div>
+        <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Transaction ID:</span> <b>${momoRef}</b></div>
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Issued:</span> <b>${now}</b></div>
         
         <div style="margin-top:20px; padding:15px; background:#f3e5f5; border-radius:8px; text-align:center; font-family:monospace; font-size:1.2rem; color:#4a148c; font-weight:bold;">
@@ -88,24 +104,19 @@ confirmForm.addEventListener('submit', async (e) => {
         </div>
     `;
 
-    // Generate QR on the ticket too
+    // Generate QR on the ticket
     const qrContainer = document.getElementById('qrcode-container');
     if (qrContainer) {
         new QRCode(qrContainer, {
-            text: window.location.href, // Links to the main page to buy tickets
-            width: 100,
-            height: 100,
-            colorDark : "#4a148c",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
+            text: window.location.href, width: 100, height: 100,
+            colorDark : "#4a148c", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H
         });
     }
 
     paymentBox.classList.add('hidden');
     ticketBox.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// STEP 3: Download/Print
-document.getElementById('downloadPdf').addEventListener('click', () => {
-    window.print();
-});
+// --- STEP 3: Download/Print ---
+document.getElementById('downloadPdf').addEventListener('click', () => window.print());
