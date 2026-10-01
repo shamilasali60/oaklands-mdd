@@ -5,6 +5,24 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Oaklands MDD & Graduation 2026</title>
 <link rel="stylesheet" href="style.css">
+<style>
+  /* Extra style for the QR box on the main page */
+  .hero-qr-container {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  .hero-qr-label {
+    margin-top: 10px;
+    color: #4a148c;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+  }
+</style>
 </head>
 <body>
 <header class="hero">
@@ -13,6 +31,12 @@
   <h2>Pre-Primary Graduation 2026</h2>
   <p class="date">20 November 2026</p>
   <p>Celebrate our children, their talents and their graduation milestone.</p>
+  
+  <!-- NEW QR CODE SECTION -->
+  <div class="hero-qr-container">
+    <div id="main-page-qr"></div>
+    <div class="hero-qr-label">Scan to Buy Tickets</div>
+  </div>
 </header>
 
 <main>
@@ -72,7 +96,6 @@
 
 <footer>Oaklands Nursery and Primary School • 20 November 2026</footer>
 
-<!-- This is the QR Code Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="app.js"></script>
 </body>
