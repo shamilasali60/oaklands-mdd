@@ -1,4 +1,5 @@
 const ticketForm = document.getElementById('ticketForm');
+const formSection = document.getElementById('formSection');
 const paymentBox = document.getElementById('paymentBox');
 const ticketBox = document.getElementById('ticketBox');
 const confirmForm = document.getElementById('confirmForm');
@@ -20,24 +21,33 @@ window.addEventListener('load', () => {
     }
 });
 
-// --- NEW: Handle Button Clicks ---
-function selectTicket(type) {
-    // Set the hidden dropdown value
+// --- NEW: Show Form Logic ---
+function showForm(type) {
+    // Show the form section
+    formSection.classList.remove('hidden');
+    
+    // Set hidden input
     document.getElementById('ticketType').value = type;
     
-    // Show the confirmation banner
-    const banner = document.getElementById('selectedBanner');
-    const text = document.getElementById('selectedText');
+    // Update Header and Fields
+    const header = document.getElementById('formHeaderTitle');
+    const childLabel = document.getElementById('childNameLabel');
     
     if (type === 'child') {
-        text.textContent = 'Child Participation — UGX 50,000';
+        header.innerText = "Child Participation Fee — UGX 50,000";
+        childLabel.style.display = 'block'; // Show child name field
     } else {
-        text.textContent = 'Parent / Visitor — UGX 30,000';
+        header.innerText = "Parent / Visitor Ticket — UGX 30,000";
+        childLabel.style.display = 'none'; // Hide child name field
     }
-    banner.style.display = 'block';
 
-    // Smooth scroll down to the form
-    ticketForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Smooth scroll to form
+    formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function hideForm() {
+    formSection.classList.add('hidden');
+    ticketForm.reset();
 }
 
 // --- Helper to copy numbers ---
@@ -59,7 +69,7 @@ ticketForm.addEventListener('submit', async (e) => {
     // Show the correct amount
     displayAmount.textContent = 'UGX ' + orderData.amount.toLocaleString();
 
-    // Highlight the correct payment row and hide the other
+    // Highlight the correct payment row
     const mtnRow = document.getElementById('mtnRow');
     const airtelRow = document.getElementById('airtelRow');
     
@@ -78,7 +88,8 @@ ticketForm.addEventListener('submit', async (e) => {
     }
 
     bookingRefEl.textContent = currentRef;
-    ticketForm.closest('.card').classList.add('hidden');
+    formSection.classList.add('hidden'); // Hide form
+    document.querySelector('.prices').classList.add('hidden'); // Hide buttons
     paymentBox.classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
@@ -107,7 +118,7 @@ confirmForm.addEventListener('submit', async (e) => {
         
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Parent/Guardian:</span> <b>${orderData.parentName}</b></div>
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Phone:</span> <b>${orderData.phone}</b></div>
-        <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Child's Name:</span> <b>${orderData.childName || '—'}</b></div>
+        ${orderData.childName ? `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Child's Name:</span> <b>${orderData.childName}</b></div>` : ''}
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Ticket Type:</span> <b>${typeLabel}</b></div>
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Amount Paid:</span> <b>UGX ${Number(orderData.amount).toLocaleString()}</b></div>
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Payment Method:</span> <b>${orderData.paymentMethod} MoMo</b></div>
@@ -124,7 +135,6 @@ confirmForm.addEventListener('submit', async (e) => {
         </div>
     `;
 
-    // Generate QR on the ticket
     const qrContainer = document.getElementById('qrcode-container');
     if (qrContainer) {
         new QRCode(qrContainer, {
@@ -138,5 +148,4 @@ confirmForm.addEventListener('submit', async (e) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// --- STEP 3: Download/Print ---
 document.getElementById('downloadPdf').addEventListener('click', () => window.print());
