@@ -1,89 +1,53 @@
 const express = require('express');
-const Database = require('better-sqlite3');
+const mongoose = require('mongoose');
 const path = require('path');
-const fs = require('fs');
-
 const app = express();
+
 app.use(express.json());
-app.use(express.static('.')); // serve index.html + assets
+app.use(express.static('.'));
 
-// --- Database setup ---
-const dataDir = path.join(__dirname, 'data');
-if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir);
-const db = new Database(path.join(dataDir, 'bookings.db'));
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('MongoDB error:', err));
 
-db.exec(`
-  CREATE TABLE IF NOT EXISTS bookings (
-    ref         TEXT PRIMARY KEY,
-    parentName  TEXT NOT NULL,
-    phone       TEXT NOT NULL,
-    email       TEXT,
-    childName   TEXT,
-    ticketType  TEXT NOT NULL,
-    paymentMethod TEXT NOT NULL,
-    amount      INTEGER NOT NULL,
-    momoRef     TEXT,
-    paid        INTEGER DEFAULT 0,
-    createdAt   TEXT DEFAULT (datetime('now'))
-  );
-`);
+const bookingSchema = new mongoose.Schema({
+  ref: String, parentName: String, phone: String, email: String,
+  childName: String, childClass: String, ticketType: String, 
+  numTickets: Number, amount: Number, paymentMethod: String,
+  momoRef: String, paid: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now }
+});
+const Booking = mongoose.model('Booking', bookingSchema);
 
-// --- Helper: generate booking reference ---
-function newRef() {
-  const rand = Math.random().toString(36).slice(2, 8).toUpperCase();
-  return `OAK-2026-${rand}`;
-}
-
-// --- Create booking ---
-app.post('/api/bookings', (req, res) => {
-  const { parentName, phone, email, childName, ticketType, paymentMethod, amount } = req.body;
-  if (!parentName || !phone || !ticketType || !paymentMethod || !amount) {
-    return res.status(400).json({ error: 'Missing required fields' });
+// API: Save Booking
+app.post('/api/bookings', async (req, res) => {
+  try {
+    const newBooking = new Booking(req.body);
+    await newBooking.save();
+    res.json({ ref: newBooking.ref, success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to save' });
   }
-  const ref = newRef();
-  db.prepare(`
-    INSERT INTO bookings (ref, parentName, phone, email, childName, ticketType, paymentMethod, amount)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `).run(ref, parentName, phone, email || null, childName || null,
-         ticketType, paymentMethod, amount);
-  res.json({ ref });
 });
 
-// --- Confirm payment (store MoMo tx ID) ---
-app.post('/api/bookings/:ref/confirm', (req, res) => {
-  const { momoRef } = req.body;
-  if (!momoRef) return res.status(400).json({ error: 'momoRef required' });
-
-  const info = db.prepare(`
-    UPDATE bookings SET momoRef = ?, paid = 1 WHERE ref = ?
-  `).run(momoRef, req.params.ref);
-
-  if (info.changes === 0) return res.status(404).json({ error: 'Booking not found' });
-  res.json({ ok: true });
+// --- NEW: API to Get All Bookings for Admin ---
+app.get('/api/bookings', async (req, res) => {
+  try {
+    const bookings = await Booking.find().sort({ createdAt: -1 });
+    res.json(bookings);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch' });
+  }
 });
 
-// --- Lookup booking (for gate verification) ---
-app.get('/api/bookings/:ref', (req, res) => {
-  const row = db.prepare('SELECT * FROM bookings WHERE ref = ?').get(req.params.ref);
-  if (!row) return res.json({ found: false });
-  res.json({
-    found: true,
-    paid: !!row.paid,
-    parentName: row.parentName,
-    phone: row.phone,
-    childName: row.childName,
-    typeLabel: row.ticketType === 'child' ? 'Child Participation' : 'Parent / Visitor',
-    amount: row.amount,
-    momoRef: row.momoRef,
-    createdAt: row.createdAt,
-  });
-});
-
-// --- Admin: list all bookings ---
-app.get('/api/bookings', (req, res) => {
-  const rows = db.prepare('SELECT * FROM bookings ORDER BY createdAt DESC').all();
-  res.json(rows);
+// --- NEW: Secret Admin Page Route ---
+app.get('/admin', (req, res) => {
+  // This is your secret password to access the page
+  if (req.query.secret !== 'oaklands2026') {
+    return res.status(403).send('<h1 style="text-align:center; margin-top:50px; color:red;">Access Denied</h1>');
+  }
+  res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Oaklands server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
