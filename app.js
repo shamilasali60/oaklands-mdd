@@ -8,6 +8,21 @@ const bookingRefEl = document.getElementById('bookingRef');
 let orderData = {};
 let currentRef = '';
 
+// --- NEW: Draw QR Code on the Main Page ---
+window.addEventListener('load', () => {
+    const mainQr = document.getElementById('main-page-qr');
+    if (mainQr) {
+        new QRCode(mainQr, {
+            text: window.location.href, // Links to this website
+            width: 120,
+            height: 120,
+            colorDark : "#4a148c",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    }
+});
+
 // STEP 1: Create Booking
 ticketForm.addEventListener('submit', async (e) => {
     e.preventDefault(); 
@@ -50,7 +65,6 @@ confirmForm.addEventListener('submit', async (e) => {
     const typeLabel = orderData.ticketType === 'child' ? 'Child Participation' : 'Parent / Visitor';
     const now = new Date().toLocaleString();
 
-    // 1. Build the Ticket HTML
     ticketContent.innerHTML = `
         <h3 style="color:#6a1b9a; margin-bottom:10px; font-size:1.5rem;">Oaklands Nursery & Primary School</h3>
         <p style="color:#666; margin-bottom:20px; font-size:0.9rem;">Music, Dance & Drama — Pre-Primary Graduation 2026</p>
@@ -74,14 +88,14 @@ confirmForm.addEventListener('submit', async (e) => {
         </div>
     `;
 
-    // 2. Generate the Real QR Code pointing to the main page
+    // Generate QR on the ticket too
     const qrContainer = document.getElementById('qrcode-container');
     if (qrContainer) {
         new QRCode(qrContainer, {
-            text: "https://oaklands-mdd.onrender.com",
-            width: 120,
-            height: 120,
-            colorDark : "#4a148c", 
+            text: window.location.href, // Links to the main page to buy tickets
+            width: 100,
+            height: 100,
+            colorDark : "#4a148c",
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.H
         });
