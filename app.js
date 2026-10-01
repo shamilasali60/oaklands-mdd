@@ -20,6 +20,26 @@ window.addEventListener('load', () => {
     }
 });
 
+// --- NEW: Handle Button Clicks ---
+function selectTicket(type) {
+    // Set the hidden dropdown value
+    document.getElementById('ticketType').value = type;
+    
+    // Show the confirmation banner
+    const banner = document.getElementById('selectedBanner');
+    const text = document.getElementById('selectedText');
+    
+    if (type === 'child') {
+        text.textContent = 'Child Participation — UGX 50,000';
+    } else {
+        text.textContent = 'Parent / Visitor — UGX 30,000';
+    }
+    banner.style.display = 'block';
+
+    // Smooth scroll down to the form
+    ticketForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
 // --- Helper to copy numbers ---
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
