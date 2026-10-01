@@ -9,6 +9,38 @@
   .hero-qr-container { background: white; padding: 15px; border-radius: 12px; display: inline-block; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
   .hero-qr-label { margin-top: 10px; color: #4a148c; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; }
   .copy-btn { background: #f9a825; color: #4a148c; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
+  
+  /* New Button Styles */
+  .price-btn {
+    background: linear-gradient(135deg, #f3e5f5, #fff8e1);
+    border: 1px solid #e5dff2;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%;
+    font-family: inherit;
+    margin-bottom: 0;
+  }
+  .price-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(106, 27, 154, 0.15);
+    border-color: #6a1b9a;
+  }
+  .price-btn strong { display: block; font-size: 1.6rem; color: #4a148c; margin-bottom: 4px; }
+  .price-btn span { font-size: 0.85rem; color: #6b6b7b; }
+  
+  .selected-banner {
+    background: #f3e5f5; 
+    padding: 12px; 
+    border-radius: 8px; 
+    margin-bottom: 15px; 
+    text-align: center; 
+    color: #4a148c; 
+    font-weight: bold;
+    border: 1px solid #e5dff2;
+  }
 </style>
 </head>
 <body>
@@ -27,22 +59,34 @@
 <main>
 <section class="card">
   <h2>Get Your Ticket</h2>
+  
+  <!-- NEW CLICKABLE BUTTONS -->
   <div class="prices">
-    <div><strong>UGX 30,000</strong><span>Parent / Visitor Ticket</span></div>
-    <div><strong>UGX 50,000</strong><span>Child Participation Fee</span></div>
+    <button type="button" class="price-btn" onclick="selectTicket('parent')">
+      <strong>UGX 30,000</strong><span>Parent / Visitor Ticket</span>
+    </button>
+    <button type="button" class="price-btn" onclick="selectTicket('child')">
+      <strong>UGX 50,000</strong><span>Child Participation Fee</span>
+    </button>
   </div>
 
   <form id="ticketForm">
+    <!-- Hidden dropdown to store the selection -->
+    <select required name="ticketType" id="ticketType" style="display:none;">
+      <option value="parent">Parent / Visitor — UGX 30,000</option>
+      <option value="child">Child Participation — UGX 50,000</option>
+    </select>
+
+    <!-- Banner that appears when they click a button -->
+    <div id="selectedBanner" class="selected-banner" style="display:none;">
+      Selected: <span id="selectedText"></span>
+    </div>
+
     <label>Parent / Guardian Name<input required name="parentName"></label>
     <label>Phone Number<input required name="phone" placeholder="07XXXXXXXX"></label>
     <label>Email (optional)<input type="email" name="email"></label>
     <label>Child's Name (if paying child fee)<input name="childName"></label>
-    <label>Ticket Type
-      <select required name="ticketType" id="ticketType">
-        <option value="parent">Parent / Visitor — UGX 30,000</option>
-        <option value="child">Child Participation — UGX 50,000</option>
-      </select>
-    </label>
+    
     <label>Payment Method
       <select required name="paymentMethod">
         <option value="MTN">MTN Mobile Money</option>
