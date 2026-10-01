@@ -21,27 +21,28 @@ window.addEventListener('load', () => {
     }
 });
 
-// --- NEW: Show Form Logic ---
+// --- Show Form Logic ---
 function showForm(type) {
-    // Show the form section
     formSection.classList.remove('hidden');
-    
-    // Set hidden input
     document.getElementById('ticketType').value = type;
     
-    // Update Header and Fields
     const header = document.getElementById('formHeaderTitle');
-    const childLabel = document.getElementById('childNameLabel');
+    const numTicketsLabel = document.getElementById('numTicketsLabel');
+    const childNameLabel = document.getElementById('childNameLabel');
+    const childClassLabel = document.getElementById('childClassLabel');
     
     if (type === 'child') {
         header.innerText = "Child Participation Fee — UGX 50,000";
-        childLabel.style.display = 'block'; // Show child name field
+        numTicketsLabel.style.display = 'none';
+        childNameLabel.style.display = 'block';
+        childClassLabel.style.display = 'block';
     } else {
         header.innerText = "Parent / Visitor Ticket — UGX 30,000";
-        childLabel.style.display = 'none'; // Hide child name field
+        numTicketsLabel.style.display = 'block';
+        childNameLabel.style.display = 'none';
+        childClassLabel.style.display = 'none';
     }
 
-    // Smooth scroll to form
     formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -63,10 +64,15 @@ ticketForm.addEventListener('submit', async (e) => {
     
     const formData = new FormData(ticketForm);
     orderData = Object.fromEntries(formData);
-    orderData.amount = orderData.ticketType === 'child' ? 50000 : 30000;
+    
+    // Calculate total amount dynamically
+    let baseAmount = orderData.ticketType === 'child' ? 50000 : 30000;
+    let tickets = parseInt(orderData.numTickets) || 1;
+    orderData.amount = baseAmount * tickets;
+    orderData.numTickets = tickets; // Save for ticket display
+    
     currentRef = 'OAK-' + Math.floor(Math.random() * 1000000);
 
-    // Show the correct amount
     displayAmount.textContent = 'UGX ' + orderData.amount.toLocaleString();
 
     // Highlight the correct payment row
@@ -88,8 +94,8 @@ ticketForm.addEventListener('submit', async (e) => {
     }
 
     bookingRefEl.textContent = currentRef;
-    formSection.classList.add('hidden'); // Hide form
-    document.querySelector('.prices').classList.add('hidden'); // Hide buttons
+    formSection.classList.add('hidden');
+    document.querySelector('.prices').classList.add('hidden');
     paymentBox.classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
@@ -100,7 +106,6 @@ confirmForm.addEventListener('submit', async (e) => {
     
     const momoRef = confirmForm.querySelector('[name=reference]').value;
 
-    // Save to database
     try {
         await fetch('/api/bookings', {
             method: 'POST',
@@ -112,15 +117,24 @@ confirmForm.addEventListener('submit', async (e) => {
     const typeLabel = orderData.ticketType === 'child' ? 'Child Participation' : 'Parent / Visitor';
     const now = new Date().toLocaleString();
 
+    // Build extra rows based on ticket type
+    let extraRows = '';
+    if (orderData.ticketType === 'parent') {
+        extraRows += `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Number of Tickets:</span> <b>${orderData.numTickets}</b></div>`;
+    } else {
+        extraRows += `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Child's Name:</span> <b>${orderData.childName || '—'}</b></div>`;
+        extraRows += `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Class:</span> <b>${orderData.childClass || '—'}</b></div>`;
+    }
+
     ticketContent.innerHTML = `
         <h3 style="color:#6a1b9a; margin-bottom:10px; font-size:1.5rem;">Oaklands Nursery & Primary School</h3>
         <p style="color:#666; margin-bottom:20px; font-size:0.9rem;">Music, Dance & Drama — Pre-Primary Graduation 2026</p>
         
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Parent/Guardian:</span> <b>${orderData.parentName}</b></div>
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Phone:</span> <b>${orderData.phone}</b></div>
-        ${orderData.childName ? `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Child's Name:</span> <b>${orderData.childName}</b></div>` : ''}
+        ${extraRows}
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Ticket Type:</span> <b>${typeLabel}</b></div>
-        <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Amount Paid:</span> <b>UGX ${Number(orderData.amount).toLocaleString()}</b></div>
+        <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Total Amount Paid:</span> <b>UGX ${Number(orderData.amount).toLocaleString()}</b></div>
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Payment Method:</span> <b>${orderData.paymentMethod} MoMo</b></div>
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Transaction ID:</span> <b>${momoRef}</b></div>
         <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eee;"><span>Issued:</span> <b>${now}</b></div>
