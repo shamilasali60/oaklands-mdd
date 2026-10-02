@@ -1,14 +1,15 @@
-/* --- MODERN DESIGN SYSTEM --- */
+/* --- OAKLANDS MUSICAL GALA DESIGN SYSTEM --- */
 :root {
-  --primary: #4A148C;       /* Deep Royal Purple */
-  --primary-light: #7B1FA2; /* Lighter Purple */
-  --accent: #FFC107;        /* Rich Gold/Yellow */
-  --bg: #F4F6F9;            /* Soft Light Gray Background */
-  --card: #FFFFFF;          /* Pure White */
-  --text: #1F2937;          /* Dark Gray for text */
-  --muted: #6B7280;         /* Light Gray for secondary text */
+  --primary: #1A5F57;       /* Teal/Green from poster */
+  --primary-dark: #0D3D38;  /* Darker teal */
+  --accent: #D4AF37;        /* Gold from poster */
+  --accent-light: #F4D03F;  /* Lighter gold */
+  --maroon: #8B2332;        /* Maroon/red from curtains */
+  --bg: #FAFAFA;            /* Off-white background */
+  --card: #FFFFFF;          /* Pure white */
+  --text: #1F2937;          /* Dark gray text */
+  --muted: #6B7280;         /* Light gray text */
   --border: #E5E7EB;        /* Subtle borders */
-  --success: #10B981;       /* Green for success */
   --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
@@ -19,87 +20,53 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, .badge, .btn-primary {
+h1, h2, h3, .badge, .btn-primary {
   font-family: 'Montserrat', sans-serif;
 }
 
-/* --- HERO SECTION --- */
+/* --- HERO SECTION WITH POSTER --- */
 .hero {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-  color: white;
-  text-align: center;
-  padding: 60px 20px 80px;
   position: relative;
+  width: 100%;
+  min-height: 600px;
   overflow: hidden;
 }
 
-.hero-content {
+.hero-bg {
   position: relative;
-  z-index: 2;
-  max-width: 800px;
-  margin: 0 auto;
+  width: 100%;
+  height: 100%;
 }
 
-.school-logo {
-  width: 90px;
-  height: 90px;
-  object-fit: contain;
-  background: white;
-  border-radius: 50%;
-  padding: 8px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  margin-bottom: 20px;
+.hero-poster {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
 }
 
-.badge {
-  display: inline-block;
-  background: rgba(255,255,255,0.15);
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
-  border: 1px solid rgba(255,255,255,0.3);
-  text-transform: uppercase;
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(26, 95, 87, 0.2), rgba(139, 35, 50, 0.3));
+  pointer-events: none;
 }
 
-.hero h1 {
-  font-size: 2.8rem;
-  font-weight: 800;
-  margin-bottom: 10px;
-  line-height: 1.2;
+.hero-content {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-align: center;
+  width: 100%;
 }
 
-.hero h2 {
-  font-size: 1.4rem;
-  font-weight: 500;
-  opacity: 0.95;
-  margin-bottom: 20px;
-}
-
-.hero .date {
-  display: inline-block;
-  background: var(--accent);
-  color: var(--primary);
-  padding: 8px 24px;
-  border-radius: 30px;
-  font-weight: 700;
-  font-size: 1rem;
-  margin-bottom: 15px;
-  box-shadow: 0 4px 10px rgba(255, 193, 7, 0.3);
-}
-
-.hero-desc {
-  max-width: 500px;
-  margin: 0 auto 30px;
-  opacity: 0.9;
-  font-size: 1.05rem;
-}
-
-/* --- QR CONTAINER --- */
 .hero-qr-container {
   background: white;
   padding: 15px 25px;
@@ -107,11 +74,13 @@ h1, h2, h3, h4, .badge, .btn-primary {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border: 3px solid var(--accent);
 }
+
 .hero-qr-label {
   margin-top: 10px;
-  color: var(--primary);
+  color: var(--primary-dark);
   font-weight: 700;
   font-size: 0.8rem;
   text-transform: uppercase;
@@ -121,7 +90,7 @@ h1, h2, h3, h4, .badge, .btn-primary {
 /* --- MAIN CONTENT --- */
 main {
   max-width: 700px;
-  margin: -50px auto 40px;
+  margin: -40px auto 40px;
   padding: 0 20px;
   position: relative;
   z-index: 3;
@@ -133,7 +102,8 @@ main {
   padding: 40px;
   box-shadow: var(--shadow);
   margin-bottom: 30px;
-  border: 1px solid rgba(255,255,255,0.5);
+  border: 2px solid var(--border);
+  border-top: 5px solid var(--accent);
 }
 
 .card h2 {
@@ -142,6 +112,8 @@ main {
   margin-bottom: 30px;
   text-align: center;
   font-weight: 700;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 15px;
 }
 
 /* --- PRICE BUTTONS --- */
@@ -153,8 +125,8 @@ main {
 }
 
 .price-btn {
-  background: white;
-  border: 2px solid var(--border);
+  background: linear-gradient(135deg, #fff 0%, #FFFDE7 100%);
+  border: 2px solid var(--accent);
   border-radius: 16px;
   padding: 25px 15px;
   text-align: center;
@@ -166,7 +138,7 @@ main {
 .price-btn:hover {
   border-color: var(--primary);
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(74, 20, 140, 0.1);
+  box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
 }
 
 .price-icon {
@@ -190,15 +162,15 @@ main {
 
 /* --- FORMS --- */
 .form-header {
-  background: linear-gradient(to right, #F3E5F5, #FFF8E1);
-  color: var(--primary);
+  background: linear-gradient(to right, #FFF8E1, #FFECB3);
+  color: var(--primary-dark);
   padding: 15px;
   border-radius: 12px;
   margin-bottom: 25px;
   font-weight: 700;
   text-align: center;
   font-size: 1.1rem;
-  border-left: 5px solid var(--primary);
+  border-left: 5px solid var(--accent);
 }
 
 form label {
@@ -223,16 +195,16 @@ form input, form select {
 
 form input:focus, form select:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--accent);
   background: white;
-  box-shadow: 0 0 0 4px rgba(74, 20, 140, 0.1);
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
 }
 
 /* --- BUTTONS --- */
 .btn-primary {
   width: 100%;
   padding: 16px;
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -241,12 +213,12 @@ form input:focus, form select:focus {
   cursor: pointer;
   margin-top: 10px;
   transition: all 0.2s;
-  box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3);
+  box-shadow: 0 4px 15px rgba(26, 95, 87, 0.3);
 }
 
 .btn-primary:hover {
-  background: var(--primary-light);
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(26, 95, 87, 0.4);
 }
 
 .btn-secondary {
@@ -282,7 +254,7 @@ form input:focus, form select:focus {
 }
 
 .paybox {
-  background: #FFFDF5;
+  background: #FFFDE7;
   border: 2px dashed var(--accent);
   border-radius: 16px;
   padding: 20px;
@@ -304,7 +276,7 @@ form input:focus, form select:focus {
 
 .copy-btn {
   background: var(--accent);
-  color: var(--primary);
+  color: var(--primary-dark);
   border: none;
   padding: 8px 16px;
   border-radius: 8px;
@@ -315,7 +287,7 @@ form input:focus, form select:focus {
 }
 
 .copy-btn:hover {
-  background: #FFD54F;
+  background: var(--accent-light);
   transform: scale(1.05);
 }
 
@@ -333,9 +305,9 @@ footer {
   padding: 40px 20px;
   color: var(--muted);
   font-size: 0.9rem;
-  border-top: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
   margin-top: 40px;
-  background: white;
+  background: linear-gradient(to bottom, white, #FFFDE7);
 }
 
 /* --- UTILITIES --- */
@@ -349,7 +321,8 @@ footer {
 }
 
 @media (max-width: 600px) {
-  .hero h1 { font-size: 2.2rem; }
+  .hero { min-height: 400px; }
+  .hero-poster { height: 400px; object-fit: cover; }
   .prices { grid-template-columns: 1fr; }
   .card { padding: 25px; }
   .ticket-actions { grid-template-columns: 1fr; }
