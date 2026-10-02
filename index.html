@@ -15,22 +15,6 @@
   <div class="hero-bg">
     <img src="poster.jpg" alt="Oaklands Musical Gala 2026" class="hero-poster">
   </div>
-  
-  <!-- Payment Info Strip Overlaid on Poster -->
-  <div class="payment-strip">
-    <div class="strip-title">⚡ FAST • SECURE • INSTANT ⚡</div>
-    <div class="strip-numbers">
-      <div class="pay-number mtn">
-        <span class="network-label">MTN MoMo</span>
-        <span class="number">0772 489 399</span>
-      </div>
-      <div class="pay-number airtel">
-        <span class="network-label">Airtel Money</span>
-        <span class="number">0700 100 800</span>
-      </div>
-    </div>
-    <div class="strip-tagline"> Pay in Seconds • Get Your Ticket Instantly! 💸</div>
-  </div>
 
   <div class="hero-content">
     <div class="hero-qr-container">
@@ -83,6 +67,59 @@
       <button type="submit" class="btn-primary">Continue to Payment</button>
       <button type="button" class="btn-secondary" onclick="hideForm()">Cancel</button>
     </form>
+  </div>
+</section>
+
+<!-- NEW: Payment Info Section Below Tickets -->
+<section class="card payment-info-card">
+  <div class="payment-info-header">
+    <div class="payment-badge">⚡ FAST • SECURE • INSTANT ⚡</div>
+    <h3>How to Pay in 3 Easy Steps</h3>
+    <p class="payment-subtitle">Your ticket arrives the moment you pay!</p>
+  </div>
+
+  <div class="steps-container">
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <h4>Choose Your Ticket</h4>
+        <p>Select Parent (UGX 30,000) or Child Participation (UGX 50,000)</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <h4>Send Mobile Money</h4>
+        <p>Use the numbers below to send payment</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <h4>Get Your Ticket Instantly</h4>
+        <p>Enter the Transaction ID and download your PDF ticket</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="payment-numbers-section">
+    <div class="section-title">💳 Send Payment To:</div>
+    
+    <div class="pay-number-card mtn">
+      <div class="network-badge mtn-badge">MTN MoMo</div>
+      <div class="number-display">0772 489 399</div>
+      <button type="button" class="copy-btn-large" onclick="copyToClipboard('0772489399')">📋 Copy Number</button>
+    </div>
+
+    <div class="pay-number-card airtel">
+      <div class="network-badge airtel-badge">Airtel Money</div>
+      <div class="number-display">0700 100 800</div>
+      <button type="button" class="copy-btn-large" onclick="copyToClipboard('0700100800')"> Copy Number</button>
+    </div>
+  </div>
+
+  <div class="payment-footer-text">
+    <p>🔒 <strong>100% Secure</strong> • 💨 <strong>Instant Confirmation</strong> • 🎫 <strong>PDF Ticket Delivered</strong></p>
   </div>
 </section>
 
