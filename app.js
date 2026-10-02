@@ -15,7 +15,7 @@ window.addEventListener('load', () => {
     const mainQr = document.getElementById('main-page-qr');
     if (mainQr) {
         new QRCode(mainQr, {
-            text: window.location.href, width: 120, height: 120,
+            text: window.location.href, width: 180, height: 180,
             colorDark : "#4a148c", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H
         });
     }
@@ -152,7 +152,7 @@ confirmForm.addEventListener('submit', async (e) => {
     const qrContainer = document.getElementById('qrcode-container');
     if (qrContainer) {
         new QRCode(qrContainer, {
-            text: window.location.href, width: 100, height: 100,
+            text: window.location.href, width: 140, height: 140,
             colorDark : "#4a148c", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H
         });
     }
