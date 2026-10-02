@@ -62,7 +62,7 @@ h1, h2, h3, .badge, .btn-primary {
 
 .hero-qr-container {
   background: white;
-  padding: 15px 25px;
+  padding: 8px 12px;
   border-radius: 16px;
   display: inline-flex;
   flex-direction: column;
