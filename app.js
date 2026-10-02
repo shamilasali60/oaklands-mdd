@@ -161,5 +161,19 @@ confirmForm.addEventListener('submit', async (e) => {
     ticketBox.classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+   // --- Download QR Code Function ---
+   function downloadQR() {
+       const qrImg = document.querySelector('#main-page-qr img');
+       if (qrImg) {
+           const link = document.createElement('a');
+           link.href = qrImg.src;
+           link.download = 'Oaklands-Musical-Gala-QR.png';
+           document.body.appendChild(link);
+           link.click();
+           document.body.removeChild(link);
+       } else {
+           alert('QR Code is still loading. Please wait 2 seconds and try again.');
+       }
+   }
 
 document.getElementById('downloadPdf').addEventListener('click', () => window.print());
