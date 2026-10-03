@@ -7,162 +7,170 @@
 <link rel="stylesheet" href="style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- HEADER: ONLY THE POSTER NOW -->
+<!-- =========================================
+     HERO SECTION: POSTER & QR CODE BAR
+     ========================================= -->
 <header class="hero">
   <div class="hero-bg">
     <img src="poster.jpg" alt="Oaklands Musical Gala 2026" class="hero-poster">
   </div>
+
+  <!-- New dedicated bar for the QR code below the poster -->
+  <div class="hero-content">
+    <div class="hero-qr-container">
+      <div id="main-page-qr"></div>
+      <div class="hero-qr-label">Scan to Buy Tickets</div>
+      <button type="button" class="download-qr-btn" onclick="downloadQR()"> Download QR Image</button>
+    </div>
+  </div>
 </header>
 
 <main>
-
-<!-- NEW: DEDICATED QR CODE BANNER -->
-<section class="qr-banner">
-  <div class="qr-banner-content">
-    <div class="qr-text">
-      <h3>Scan to Buy Tickets Instantly!</h3>
-      <p>Point your phone camera at the QR code to open this page and pay securely.</p>
-    </div>
-    <div class="qr-box">
-      <div id="main-page-qr"></div>
-      <button type="button" class="download-qr-btn" onclick="downloadQR()">⬇ Save QR</button>
-    </div>
-  </div>
-</section>
-
-<section class="card">
-  <h2>Get Your Ticket</h2>
-  
-  <div class="prices">
-    <button type="button" class="price-btn" onclick="showForm('parent')">
-      <div class="price-icon">️</div>
-      <strong>UGX 30,000</strong><span>Parent / Visitor Ticket</span>
-    </button>
-    <button type="button" class="price-btn" onclick="showForm('child')">
-      <div class="price-icon">🎓</div>
-      <strong>UGX 50,000</strong><span>Child Participation Fee</span>
-    </button>
-  </div>
-
-  <div id="formSection" class="hidden">
-    <div class="form-header" id="formHeaderTitle">Complete your booking</div>
+  <!-- =========================================
+       TICKET SELECTION & FORM
+       ========================================= -->
+  <section class="card">
+    <h2>Get Your Ticket</h2>
     
-    <form id="ticketForm">
-      <input type="hidden" name="ticketType" id="ticketType">
+    <div class="prices">
+      <button type="button" class="price-btn" onclick="showForm('parent')">
+        <div class="price-icon">🎟️</div>
+        <strong>UGX 30,000</strong><span>Parent / Visitor Ticket</span>
+      </button>
+      <button type="button" class="price-btn" onclick="showForm('child')">
+        <div class="price-icon">🎓</div>
+        <strong>UGX 50,000</strong><span>Child Participation Fee</span>
+      </button>
+    </div>
 
-      <label id="numTicketsLabel" style="display:none;">Number of Tickets
-        <input type="number" name="numTickets" min="1" value="1" placeholder="1">
-      </label>
+    <div id="formSection" class="hidden">
+      <div class="form-header" id="formHeaderTitle">Complete your booking</div>
+      
+      <form id="ticketForm">
+        <input type="hidden" name="ticketType" id="ticketType">
 
-      <label>Parent / Guardian Name<input required name="parentName" placeholder="Full Name"></label>
+        <label id="numTicketsLabel" style="display:none;">Number of Tickets
+          <input type="number" name="numTickets" min="1" value="1" placeholder="1">
+        </label>
+
+        <label>Parent / Guardian Name<input required name="parentName" placeholder="Full Name"></label>
+        
+        <label id="childNameLabel" style="display:none;">Child's Name<input name="childName" placeholder="Student Name"></label>
+        <label id="childClassLabel" style="display:none;">Child's Class<input name="childClass" placeholder="e.g. Baby Class"></label>
+        
+        <label>Phone Number<input required name="phone" placeholder="07XXXXXXXX"></label>
+        <label>Email (optional)<input type="email" name="email"></label>
+        
+        <label>Payment Method
+          <select required name="paymentMethod">
+            <option value="MTN">MTN Mobile Money</option>
+            <option value="AIRTEL">Airtel Money</option>
+          </select>
+        </label>
+        
+        <button type="submit" class="btn-primary">Continue to Payment</button>
+        <button type="button" class="btn-secondary" onclick="hideForm()">Cancel</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- =========================================
+       PAYMENT INFO & INSTRUCTIONS
+       ========================================= -->
+  <section class="card payment-info-card">
+    <div class="payment-info-header">
+      <div class="payment-badge">⚡ FAST • SECURE • INSTANT ⚡</div>
+      <h3>How to Pay in 3 Easy Steps</h3>
+      <p class="payment-subtitle">Your ticket arrives the moment you pay!</p>
+    </div>
+
+    <div class="steps-container">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h4>Choose Your Ticket</h4>
+          <p>Select Parent (UGX 30,000) or Child Participation (UGX 50,000)</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h4>Send Mobile Money</h4>
+          <p>Use the numbers below to send payment</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h4>Get Your Ticket Instantly</h4>
+          <p>Enter the Transaction ID and download your PDF ticket</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="payment-numbers-section">
+      <div class="section-title">💳 Send Payment To:</div>
       
-      <label id="childNameLabel" style="display:none;">Child's Name<input name="childName" placeholder="Student Name"></label>
-      <label id="childClassLabel" style="display:none;">Child's Class<input name="childClass" placeholder="e.g. Baby Class"></label>
-      
-      <label>Phone Number<input required name="phone" placeholder="07XXXXXXXX"></label>
-      <label>Email (optional)<input type="email" name="email"></label>
-      
-      <label>Payment Method
-        <select required name="paymentMethod">
-          <option value="MTN">MTN Mobile Money</option>
-          <option value="AIRTEL">Airtel Money</option>
-        </select>
-      </label>
-      
-      <button type="submit" class="btn-primary">Continue to Payment</button>
-      <button type="button" class="btn-secondary" onclick="hideForm()">Cancel</button>
+      <div class="pay-number-card mtn">
+        <div class="network-badge mtn-badge">MTN MoMo</div>
+        <div class="number-display">0772 489 399</div>
+        <button type="button" class="copy-btn-large" onclick="copyToClipboard('0772489399')">📋 Copy Number</button>
+      </div>
+
+      <div class="pay-number-card airtel">
+        <div class="network-badge airtel-badge">Airtel Money</div>
+        <div class="number-display">0700 100 800</div>
+        <button type="button" class="copy-btn-large" onclick="copyToClipboard('0700100800')">📋 Copy Number</button>
+      </div>
+    </div>
+
+    <div class="payment-footer-text">
+      <p>🔒 <strong>100% Secure</strong> • 💨 <strong>Instant Confirmation</strong> • 🎫 <strong>PDF Ticket Delivered</strong></p>
+    </div>
+  </section>
+
+  <!-- =========================================
+       CHECKOUT PAYMENT BOX (Hidden initially)
+       ========================================= -->
+  <section class="card hidden" id="paymentBox">
+    <h2>Payment Instructions</h2>
+    <p>Your booking reference: <b id="bookingRef" class="ref-code">—</b></p>
+    <p class="pay-instruction">Send <b id="displayAmount">UGX 0</b> to the number below:</p>
+    
+    <div class="paybox">
+      <div id="mtnRow" class="pay-row">
+        <div class="pay-info"><b>MTN MoMo:</b> <span>0772 489 399</span></div>
+        <button type="button" class="copy-btn" onclick="copyToClipboard('0772489399')">Copy</button>
+      </div>
+      <div id="airtelRow" class="pay-row">
+        <div class="pay-info"><b>Airtel Money:</b> <span>0700 100 800</span></div>
+        <button type="button" class="copy-btn" onclick="copyToClipboard('0700100800')">Copy</button>
+      </div>
+    </div>
+
+    <p class="small-text">After sending, enter the Transaction ID from your SMS below.</p>
+    <form id="confirmForm">
+      <label>Mobile-money Transaction ID<input required name="reference" placeholder="e.g. 8H392..."></label>
+      <button type="submit" class="btn-primary">Confirm Payment & Generate Ticket</button>
     </form>
-  </div>
-</section>
+  </section>
 
-<section class="card payment-info-card">
-  <div class="payment-info-header">
-    <div class="payment-badge">⚡ FAST • SECURE • INSTANT </div>
-    <h3>How to Pay in 3 Easy Steps</h3>
-    <p class="payment-subtitle">Your ticket arrives the moment you pay!</p>
-  </div>
-
-  <div class="steps-container">
-    <div class="step">
-      <div class="step-number">1</div>
-      <div class="step-content">
-        <h4>Choose Your Ticket</h4>
-        <p>Select Parent (UGX 30,000) or Child Participation (UGX 50,000)</p>
-      </div>
+  <!-- =========================================
+       FINAL TICKET DISPLAY (Hidden initially)
+       ========================================= -->
+  <section class="card hidden" id="ticketBox">
+    <div id="ticket">
+      <div id="ticketContent"></div>
     </div>
-    <div class="step">
-      <div class="step-number">2</div>
-      <div class="step-content">
-        <h4>Send Mobile Money</h4>
-        <p>Use the numbers below to send payment</p>
-      </div>
+    <div class="ticket-actions">
+      <button id="downloadPdf" class="btn-primary">⬇ Download PDF Ticket</button>
+      <button class="btn-secondary" onclick="window.print()">🖨 Print</button>
     </div>
-    <div class="step">
-      <div class="step-number">3</div>
-      <div class="step-content">
-        <h4>Get Your Ticket Instantly</h4>
-        <p>Enter the Transaction ID and download your PDF ticket</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="payment-numbers-section">
-    <div class="section-title">💳 Send Payment To:</div>
-    
-    <div class="pay-number-card mtn">
-      <div class="network-badge mtn-badge">MTN MoMo</div>
-      <div class="number-display">0772 489 399</div>
-      <button type="button" class="copy-btn-large" onclick="copyToClipboard('0772489399')">📋 Copy Number</button>
-    </div>
-
-    <div class="pay-number-card airtel">
-      <div class="network-badge airtel-badge">Airtel Money</div>
-      <div class="number-display">0700 100 800</div>
-      <button type="button" class="copy-btn-large" onclick="copyToClipboard('0700100800')">📋 Copy Number</button>
-    </div>
-  </div>
-
-  <div class="payment-footer-text">
-    <p> <strong>100% Secure</strong> • 💨 <strong>Instant Confirmation</strong> • 🎫 <strong>PDF Ticket Delivered</strong></p>
-  </div>
-</section>
-
-<section class="card hidden" id="paymentBox">
-  <h2>Payment Instructions</h2>
-  <p>Your booking reference: <b id="bookingRef" class="ref-code">—</b></p>
-  <p class="pay-instruction">Send <b id="displayAmount">UGX 0</b> to the number below:</p>
-  
-  <div class="paybox">
-    <div id="mtnRow" class="pay-row">
-      <div class="pay-info"><b>MTN MoMo:</b> <span>0772 489 399</span></div>
-      <button type="button" class="copy-btn" onclick="copyToClipboard('0772489399')">Copy</button>
-    </div>
-    <div id="airtelRow" class="pay-row">
-      <div class="pay-info"><b>Airtel Money:</b> <span>0700 100 800</span></div>
-      <button type="button" class="copy-btn" onclick="copyToClipboard('0700100800')">Copy</button>
-    </div>
-  </div>
-
-  <p class="small-text">After sending, enter the Transaction ID from your SMS below.</p>
-  <form id="confirmForm">
-    <label>Mobile-money Transaction ID<input required name="reference" placeholder="e.g. 8H392..."></label>
-    <button type="submit" class="btn-primary">Confirm Payment & Generate Ticket</button>
-  </form>
-</section>
-
-<section class="card hidden" id="ticketBox">
-  <div id="ticket">
-    <div id="ticketContent"></div>
-  </div>
-  <div class="ticket-actions">
-    <button id="downloadPdf" class="btn-primary">⬇ Download PDF Ticket</button>
-    <button class="btn-secondary" onclick="window.print()"> Print</button>
-  </div>
-</section>
+  </section>
 </main>
 
 <footer>
