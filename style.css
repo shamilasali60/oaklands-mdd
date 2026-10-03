@@ -55,10 +55,10 @@ h1, h2, h3, .badge, .btn-primary {
   object-position: center top;
 }
 
-/* --- THE FLOATING QR CONTAINER --- */
+/* --- THE FLOATING QR CONTAINER (RIGHT SIDE) --- */
 .qr-floating-container {
   position: absolute;
-  left: 5%; /* Distance from the left edge */
+  right: 5%; /* Changed from left to right */
   top: 50%; /* Vertically center it */
   transform: translateY(-50%);
   z-index: 10;
