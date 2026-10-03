@@ -11,28 +11,24 @@
 </head>
 <body>
 
-<!-- =========================================
-     HERO SECTION: POSTER & QR CODE BAR
-     ========================================= -->
+<!-- HERO SECTION: POSTER WITH FLOATING QR -->
 <header class="hero">
   <div class="hero-bg">
     <img src="poster.jpg" alt="Oaklands Musical Gala 2026" class="hero-poster">
   </div>
 
-  <!-- New dedicated bar for the QR code below the poster -->
-  <div class="hero-content">
+  <!-- This container floats on top of the poster -->
+  <div class="qr-floating-container">
     <div class="hero-qr-container">
       <div id="main-page-qr"></div>
       <div class="hero-qr-label">Scan to Buy Tickets</div>
-      <button type="button" class="download-qr-btn" onclick="downloadQR()"> Download QR Image</button>
+      <button type="button" class="download-qr-btn" onclick="downloadQR()">⬇ Download QR</button>
     </div>
   </div>
 </header>
 
 <main>
-  <!-- =========================================
-       TICKET SELECTION & FORM
-       ========================================= -->
+  <!-- TICKET SELECTION & FORM -->
   <section class="card">
     <h2>Get Your Ticket</h2>
     
@@ -78,9 +74,7 @@
     </div>
   </section>
 
-  <!-- =========================================
-       PAYMENT INFO & INSTRUCTIONS
-       ========================================= -->
+  <!-- PAYMENT INFO & INSTRUCTIONS -->
   <section class="card payment-info-card">
     <div class="payment-info-header">
       <div class="payment-badge">⚡ FAST • SECURE • INSTANT ⚡</div>
@@ -133,9 +127,7 @@
     </div>
   </section>
 
-  <!-- =========================================
-       CHECKOUT PAYMENT BOX (Hidden initially)
-       ========================================= -->
+  <!-- CHECKOUT PAYMENT BOX (Hidden initially) -->
   <section class="card hidden" id="paymentBox">
     <h2>Payment Instructions</h2>
     <p>Your booking reference: <b id="bookingRef" class="ref-code">—</b></p>
@@ -159,9 +151,7 @@
     </form>
   </section>
 
-  <!-- =========================================
-       FINAL TICKET DISPLAY (Hidden initially)
-       ========================================= -->
+  <!-- FINAL TICKET DISPLAY (Hidden initially) -->
   <section class="card hidden" id="ticketBox">
     <div id="ticket">
       <div id="ticketContent"></div>
