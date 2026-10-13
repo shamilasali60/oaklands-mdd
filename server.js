@@ -41,12 +41,22 @@ app.get('/api/bookings', async (req, res) => {
   }
 });
 
-// 5. THE ADMIN ROUTE (Password Removed!)
+// 5. NEW API: Delete a Booking
+app.delete('/api/bookings/:id', async (req, res) => {
+  try {
+    await Booking.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete' });
+  }
+});
+
+// 6. THE ADMIN ROUTE
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
-// 6. Serve the main website files
+// 7. Serve the main website files
 app.use(express.static(path.join(__dirname)));
 
 const PORT = process.env.PORT || 3000;
