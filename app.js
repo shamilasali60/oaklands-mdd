@@ -10,17 +10,6 @@ const displayAmount = document.getElementById('displayAmount');
 let orderData = {};
 let currentRef = '';
 
-// --- Draw QR Code on Main Page ---
-window.addEventListener('load', () => {
-    const mainQr = document.getElementById('main-page-qr');
-    if (mainQr) {
-        new QRCode(mainQr, {
-            text: window.location.href, width: 180, height: 180,
-            colorDark : "#4a148c", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H
-        });
-    }
-});
-
 // --- Show Form Logic ---
 function showForm(type) {
     formSection.classList.remove('hidden');
