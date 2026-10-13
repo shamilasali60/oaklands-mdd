@@ -261,6 +261,191 @@ footer { text-align: center; padding: 40px 20px; color: var(--muted); font-size:
 /* =========================================
    MOBILE RESPONSIVENESS
    ========================================= */
+/* =========================================
+   PAYMENT MODAL POPUP
+   ========================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-content {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+  border-top: 6px solid var(--accent);
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f3f4f6;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  background: #e5e7eb;
+  transform: rotate(90deg);
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.modal-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.modal-header h3 {
+  color: var(--primary-dark);
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  font-weight: 800;
+}
+
+.modal-amount {
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.modal-amount b {
+  color: var(--primary);
+  font-size: 1.3rem;
+}
+
+.modal-network-section {
+  margin-bottom: 20px;
+}
+
+.network-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 15px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.mtn-header {
+  background: #FFF9C4;
+  color: #000;
+  border-left: 5px solid var(--mtn-yellow);
+}
+
+.airtel-header {
+  background: #FFEBEE;
+  color: #000;
+  border-left: 5px solid var(--airtel-red);
+}
+
+.network-logo {
+  font-size: 1.3rem;
+}
+
+.modal-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-option-btn {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  padding: 16px 20px;
+  background: #FAFAFA;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  font-family: inherit;
+}
+
+.modal-option-btn:hover {
+  border-color: var(--primary);
+  background: #F3E5F5;
+  transform: translateX(5px);
+}
+
+.option-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.option-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-text strong {
+  color: var(--primary-dark);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.option-text span {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+
+.modal-footer {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px dashed var(--border);
+}
+
+.modal-footer p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
 @media (max-width: 768px) {
   /* On mobile, move QR code below poster so it doesn't cover the image */
   .qr-floating-container {
