@@ -24,10 +24,23 @@
   .btn-print { background: #4A148C; }
   .btn-refresh { background: #10B981; }
   
+  .btn-delete {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  .btn-delete:hover { background: #dc2626; }
+
   .error-msg { text-align: center; padding: 20px; color: #d32f2f; background: #ffebee; border-radius: 8px; margin: 20px 0; }
   
   @media print {
-    .controls { display: none; }
+    .controls, .btn-delete, th:last-child, td:last-child { display: none !important; }
     body { background: white; padding: 0; }
     .container { box-shadow: none; padding: 0; max-width: 100%; }
     h1 { font-size: 1.5rem; margin-bottom: 10px; }
@@ -68,10 +81,11 @@
         <th>Amount</th>
         <th>MoMo Ref</th>
         <th>Date</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody id="tableBody">
-      <tr><td colspan="9" style="text-align:center; padding: 30px;">Loading data...</td></tr>
+      <tr><td colspan="10" style="text-align:center; padding: 30px;">Loading data...</td></tr>
     </tbody>
   </table>
 </div>
@@ -79,7 +93,7 @@
 <script>
   async function loadData() {
     const tbody = document.getElementById('tableBody');
-    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">Loading data...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">Loading data...</td></tr>';
     
     try {
       const res = await fetch('/api/bookings');
@@ -90,7 +104,7 @@
       let totalAmt = 0;
 
       if (data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color: #666; padding: 20px;">No bookings found yet.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color: #666; padding: 20px;">No bookings found yet.</td></tr>';
       }
 
       data.forEach(b => {
@@ -109,6 +123,9 @@
             <td>UGX ${(b.amount || 0).toLocaleString()}</td>
             <td>${b.momoRef || '-'}</td>
             <td>${date}</td>
+            <td>
+              <button class="btn-delete" onclick="deleteBooking('${b._id}')">🗑 Delete</button>
+            </td>
           </tr>
         `;
         tbody.innerHTML += row;
@@ -119,11 +136,26 @@
 
     } catch (err) {
       console.error(err);
-      tbody.innerHTML = `<tr><td colspan="9" class="error-msg">Error loading data. <br><small>Check console or ensure database is connected.</small></td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="10" class="error-msg">Error loading data. <br><small>Check console or ensure database is connected.</small></td></tr>`;
+    }
+  }
+
+  // NEW: Delete Booking Function
+  async function deleteBooking(id) {
+    if (confirm('Are you sure you want to permanently delete this booking? This cannot be undone.')) {
+      try {
+        const res = await fetch(`/api/bookings/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          loadData(); // Refresh the table automatically
+        } else {
+          alert('Failed to delete booking.');
+        }
+      } catch (err) {
+        alert('Error connecting to server.');
+      }
     }
   }
   
-  // Load data on startup
   loadData();
 </script>
 </body>
