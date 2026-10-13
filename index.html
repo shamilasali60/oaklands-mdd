@@ -11,11 +11,12 @@
 </head>
 <body>
 
-<!-- HERO SECTION: POSTER WITH FLOATING QR -->
+<!-- HERO SECTION -->
 <header class="hero">
   <div class="hero-bg">
     <img src="poster.jpg" alt="Oaklands Musical Gala 2026" class="hero-poster">
   </div>
+</header>
 
 <main>
   <!-- TICKET SELECTION & FORM -->
@@ -28,7 +29,7 @@
         <strong>UGX 30,000</strong><span>Parent / Visitor Ticket</span>
       </button>
       <button type="button" class="price-btn" onclick="showForm('child')">
-        <div class="price-icon">🎓</div>
+        <div class="price-icon"></div>
         <strong>UGX 50,000</strong><span>Child Participation Fee</span>
       </button>
     </div>
@@ -52,7 +53,7 @@
         <label>Email (optional)<input type="email" name="email"></label>
         
         <label>Payment Method
-          <select required name="paymentMethod">
+          <select required name="paymentMethod" id="paymentMethodSelect">
             <option value="MTN">MTN Mobile Money</option>
             <option value="AIRTEL">Airtel Money</option>
           </select>
@@ -67,7 +68,7 @@
   <!-- PAYMENT INFO & INSTRUCTIONS -->
   <section class="card payment-info-card">
     <div class="payment-info-header">
-      <div class="payment-badge">⚡ FAST • SECURE • INSTANT ⚡</div>
+      <div class="payment-badge">⚡ FAST • SECURE • INSTANT </div>
       <h3>How to Pay in 3 Easy Steps</h3>
       <p class="payment-subtitle">Your ticket arrives the moment you pay!</p>
     </div>
@@ -113,7 +114,7 @@
     </div>
 
     <div class="payment-footer-text">
-      <p>🔒 <strong>100% Secure</strong> • 💨 <strong>Instant Confirmation</strong> • 🎫 <strong>PDF Ticket Delivered</strong></p>
+      <p>🔒 <strong>100% Secure</strong> • 💨 <strong>Instant Confirmation</strong> •  <strong>PDF Ticket Delivered</strong></p>
     </div>
   </section>
 
@@ -152,6 +153,94 @@
     </div>
   </section>
 </main>
+
+<!-- =========================================
+     NEW: PAYMENT METHOD POPUP MODAL
+     ========================================= -->
+<div id="paymentModal" class="modal-overlay hidden">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closePaymentModal()">✕</button>
+    
+    <div class="modal-header">
+      <div class="modal-icon">💳</div>
+      <h3>Choose How to Pay</h3>
+      <p class="modal-amount">Amount: <b id="modalAmountDisplay">UGX 0</b></p>
+    </div>
+
+    <!-- MTN Options -->
+    <div id="mtnModalSection" class="modal-network-section">
+      <div class="network-header mtn-header">
+        <span class="network-logo">🟡</span>
+        <span>MTN Mobile Money</span>
+      </div>
+      
+      <div class="modal-options">
+        <button type="button" class="modal-option-btn" onclick="openDialer('*165#')">
+          <div class="option-icon">📞</div>
+          <div class="option-text">
+            <strong>Dial *165#</strong>
+            <span>Opens your phone dialer</span>
+          </div>
+        </button>
+
+        <button type="button" class="modal-option-btn" onclick="openMoMoApp()">
+          <div class="option-icon">📱</div>
+          <div class="option-text">
+            <strong>Open MoMo App</strong>
+            <span>Pay directly in the app</span>
+          </div>
+        </button>
+
+        <button type="button" class="modal-option-btn" onclick="copyAndShowInstructions('MTN')">
+          <div class="option-icon">📋</div>
+          <div class="option-text">
+            <strong>Copy Number & Pay</strong>
+            <span>0772 489 399</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Airtel Options -->
+    <div id="airtelModalSection" class="modal-network-section hidden">
+      <div class="network-header airtel-header">
+        <span class="network-logo">🔴</span>
+        <span>Airtel Money</span>
+      </div>
+      
+      <div class="modal-options">
+        <button type="button" class="modal-option-btn" onclick="openDialer('*185#')">
+          <div class="option-icon">📞</div>
+          <div class="option-text">
+            <strong>Dial *185#</strong>
+            <span>Opens your phone dialer</span>
+          </div>
+        </button>
+
+        <button type="button" class="modal-option-btn" onclick="openAirtelApp()">
+          <div class="option-icon">📱</div>
+          <div class="option-text">
+            <strong>Open Airtel Money App</strong>
+            <span>Pay directly in the app</span>
+          </div>
+        </button>
+
+        <button type="button" class="modal-option-btn" onclick="copyAndShowInstructions('AIRTEL')">
+          <div class="option-icon">📋</div>
+          <div class="option-text">
+            <strong>Copy Number & Pay</strong>
+            <span>0700 100 800</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <p>After payment, enter the Transaction ID to get your ticket.</p>
+      <button type="button" class="btn-secondary" onclick="closePaymentModal()">Go Back</button>
+    </div>
+  </div>
+</div>
 
 <footer>
   <p>Oaklands Schools • Musical Gala 2026 • 26 November 2026 • Theater LaBonita</p>
