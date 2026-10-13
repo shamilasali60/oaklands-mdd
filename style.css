@@ -55,53 +55,6 @@ h1, h2, h3, .badge, .btn-primary {
   object-position: center top;
 }
 
-/* --- THE FLOATING QR CONTAINER (RIGHT SIDE) --- */
-.qr-floating-container {
-  position: absolute;
-  right: 5%; /* Changed from left to right */
-  top: 50%; /* Vertically center it */
-  transform: translateY(-50%);
-  z-index: 10;
-}
-
-.hero-qr-container {
-  background: white;
-  padding: 10px 20px;
-  border-radius: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-  border: 3px solid var(--accent);
-}
-
-.hero-qr-label {
-  margin-top: 10px;
-  color: var(--primary-dark);
-  font-weight: 700;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.download-qr-btn {
-  margin-top: 12px;
-  background: var(--accent);
-  color: var(--primary-dark);
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.download-qr-btn:hover {
-  background: var(--accent-light);
-  transform: scale(1.05);
-}
-
 /* =========================================
    MAIN CONTENT & CARDS
    ========================================= */
